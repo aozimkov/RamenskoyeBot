@@ -24,7 +24,16 @@ def dbtest(message):
 @bot.message_handler(commands=['info'])
 def info(message):
     markup = utils.info_keyboard(dictionary.info_kb_keys)
-    bot.send_message(message.chat.id, "Выберите интересующую вас информацию",  reply_markup = markup )
+    result = bot.send_message(message.chat.id, "Выберите интересующую вас информацию",  reply_markup = markup )
+    bot.register_next_step_handler(result, process_step)
+
+def process_step(message):
+    chat_id = message.chat.id
+    if message.text == dictionary.info_kb_keys[0]:
+        bot.send_message(chat_id, "http://ramenskoye.ru")
+    else:
+        pass    
+
 
 
 """ Эхо текст """
