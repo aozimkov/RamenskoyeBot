@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import config
 from SQLighter import SQLighter
+import utils
 import dictionary
 import telebot
 
@@ -19,6 +20,12 @@ def dbtest(message):
     db.close()
     result = "Соединение с базой успешно установлено.\nКоличество категорий в бд: %s " % categories_num
     bot.send_message(message.chat.id, result)
+
+@bot.message_handler(commands=['info'])
+def info(message):
+    markup = utils.info_keyboard(dictionary.info_kb_keys)
+    bot.send_message(message.chat.id, "Выберите интересующую вас информацию",  reply_markup = markup )
+
 
 """ Эхо текст """
 @bot.message_handler(content_types=['text'])
